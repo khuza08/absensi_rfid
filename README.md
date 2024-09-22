@@ -1,4 +1,5 @@
 # Struktur file
+```
 ~/absensi/*
 │
 ├── index.html                 # Halaman utama untuk menampilkan data absensi
@@ -6,3 +7,4 @@
 ├── getAbsensi.php             # Script PHP untuk mengambil data absensi
 ├── clearAbsensi.php           # Script PHP untuk menghapus data absensi
 ├── db.php              	     # Skrip untuk konek tabel di database
+```
