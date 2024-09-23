@@ -1,13 +1,13 @@
 <?php
-$servername = "localhost"; // Ganti jika perlu
-$username = "root"; // Ganti jika perlu
-$password = ""; // Ganti jika perlu
-$dbname = "absensi";
+$servername = "localhost"; // Ganti sname kamu
+$username = "root"; // Ganti sesuai uname kamu
+$password = ""; // Ganti sesuai password kamu
+$dbname = "absensi"; // Ganti sesuai database kamu
 
 // Buat koneksi
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Periksa koneksi
+// Cek koneksi
 if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
