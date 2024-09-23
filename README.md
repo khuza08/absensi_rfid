@@ -1,4 +1,4 @@
-# Struktur file
+# Structure 
 ```
 ~/absensi/*
 │
@@ -8,7 +8,7 @@
 ├── clearAbsensi.php          
 ├── db.php                
 ```
-# Install library yang dibutuhin
+# Library
 ```
 SPI
 MFRC522
@@ -17,5 +17,5 @@ ESP8266HTTPClient
 ```
 # How to use
 ```
-Tinggal upload aja .ino di ArduinoIDE
+Upload .ino files into esp* board
 ```
