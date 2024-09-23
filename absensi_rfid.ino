@@ -3,16 +3,16 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-#define SS_PIN 2  // Pin SDA terhubung ke GPIO2 (D4)
-#define RST_PIN 0 // Pin RST terhubung ke GPIO0 (D3)
-#define BUZZER_PIN 5 // Pin buzzer terhubung ke GPIO5 (D1)
+#define SS_PIN 2  // Pin SDA ke GPIO2 (D4)
+#define RST_PIN 0 // Pin RST ke GPIO0 (D3)
+#define BUZZER_PIN 5 // Pin buzzer ke GPIO5 (D1)
 
-const char* ssid = "k1llv01d";
-const char* password = "disgrace7k";
+const char* ssid = "yourssid";
+const char* password = "yourpass";
 
-MFRC522 rfid(SS_PIN, RST_PIN); // Inisialisasi instance RFID
+MFRC522 rfid(SS_PIN, RST_PIN); // Inisialisasi instansi RFID
 
-bool alreadyPresent = false; // Status kehadiran
+bool alreadyPresent = false; // Status absen
 
 void setup() {
     Serial.begin(115200);
@@ -43,25 +43,25 @@ void loop() {
     // Koneksi ke server PHP
     if (WiFi.status() == WL_CONNECTED) {
         HTTPClient http;
-        WiFiClient client; // Buat objek WiFiClient
+        WiFiClient client; // Objek WiFiClient
         String url = "http://192.168.238.23/absensi/getUser.php?uid=" + uidString; // Ganti dengan alamat IP server lokal Anda
         
-        http.begin(client, url); // Menggunakan client
+        http.begin(client, url); // Pakai client
         int httpResponseCode = http.GET();
 
         if (httpResponseCode > 0) {
             String response = http.getString();
             Serial.println("Response dari server: " + response);
 
-            // Aktifkan buzzer sesuai validasi
+            // Buzzer sesuai input RFID
             if (response.indexOf("User not found") != -1) {
-                // Buzzer untuk invalid (3 kali beep)
+                // INnvalid Buzzer akan beep 3 kali
                 for (int i = 0; i < 3; i++) {
                     tone(BUZZER_PIN, 5555);
                     delay(1000);
                     noTone(BUZZER_PIN);
                     delay(256);
-                }
+                } // (broken)
                 alreadyPresent = false; // Reset status absen
             } else if (response.indexOf("already present") != -1) {
                 // Buzzer untuk sudah hadir
@@ -70,9 +70,9 @@ void loop() {
                     delay(500);
                     noTone(BUZZER_PIN);
                     delay(500);
-                }
+                }  // (/broken)
             } else {
-                // Buzzer untuk valid (2 kali beep)
+                // Valid Buzzer akan beep 2 kali
                 alreadyPresent = true; // Set status absen
                 for (int i = 0; i < 2; i++) {
                     tone(BUZZER_PIN, 5555);
@@ -89,5 +89,5 @@ void loop() {
     }
 
     rfid.PICC_HaltA();
-    delay(256); // Jeda sebelum membaca kartu berikutnya
+    delay(256); // Delay atau sleep setelah input kartu
 }
